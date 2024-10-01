@@ -16,6 +16,7 @@ export const TextRevealCard = ({
   className?: string;
 }) => {
   const [widthPercentage, setWidthPercentage] = useState(0);
+  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cardRef = useRef<HTMLDivElement | any>(null);
   const [left, setLeft] = useState(0);
@@ -30,10 +31,9 @@ export const TextRevealCard = ({
       setLocalWidth(localWidth);
     }
   }, []);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function mouseMoveHandler(event: any) {
-    event.preventDefault();
 
+  function mouseMoveHandler(event: React.MouseEvent<HTMLDivElement>) {
+    event.preventDefault();
     const { clientX } = event;
     if (cardRef.current) {
       const relativeX = clientX - left;
@@ -45,9 +45,11 @@ export const TextRevealCard = ({
     setIsMouseOver(false);
     setWidthPercentage(0);
   }
+
   function mouseEnterHandler() {
     setIsMouseOver(true);
   }
+
   function touchMoveHandler(event: React.TouchEvent<HTMLDivElement>) {
     event.preventDefault();
     const clientX = event.touches[0]!.clientX;
@@ -58,6 +60,7 @@ export const TextRevealCard = ({
   }
 
   const rotateDeg = (widthPercentage - 50) * 0.1;
+
   return (
     <div
       onMouseEnter={mouseEnterHandler}
@@ -93,7 +96,7 @@ export const TextRevealCard = ({
             style={{
               textShadow: "4px 4px 15px rgba(0,0,0,0.5)",
             }}
-            className="text-base sm:text-[3rem] py-10 font-bold text-white bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-300 text-center"
+            className="text-center text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-300 font-bold py-10 sm:text-3xl md:text-4xl lg:text-5xl"
           >
             {revealText}
           </p>
@@ -110,7 +113,7 @@ export const TextRevealCard = ({
         ></motion.div>
 
         <div className="overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]">
-          <p className="text-base sm:text-[3rem] py-10 font-bold bg-clip-text text-transparent bg-blue-100 text-center">
+          <p className="text-transparent bg-clip-text bg-blue-100 text-center font-bold py-10 sm:text-3xl md:text-4xl lg:text-5xl">
             {text}
           </p>
           <MemoizedStars />
